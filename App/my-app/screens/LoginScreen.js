@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import style from './LoginPage.css';
 import {
 	StyleSheet,
 	Text,
@@ -10,16 +9,41 @@ import {
 	Button,
 	TouchableOpacity,
 } from 'react-native';
+import { auth } from '../firebase';
+import {
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+} from 'firebase/auth';
 
-const LoginPage = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+	const handleSignUp = () => {
+		createUserWithEmailAndPassword(auth, email, password)
+			.then((userCredentials) => {
+				const user = userCredentials.user;
+				console.log(user.email);
+				navigation.navigate('PicturePage');
+			})
+			.catch((error) => alert(error.message));
+	};
+
+	const handleLogin = () => {
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredentials) => {
+				const user = userCredentials.user;
+				console.log(user.email);
+				navigation.navigate('PicturePage');
+			})
+			.catch((error) => alert(error.message));
+	};
 
 	return (
 		<View style={styles.container}>
 			<Image
 				style={{ width: 100, height: 100, paddingBottom: '15px' }}
-				source={require('../../assets/house.jpg')}
+				source={require('../assets/house.jpg')}
 			/>
 			<StatusBar style="auto" />
 			<View style={styles.inputView}>
@@ -39,20 +63,11 @@ const LoginPage = ({ navigation }) => {
 					onChangeText={(password) => setPassword(password)}
 				/>
 			</View>
-			<TouchableOpacity>
-				<Button
-					style={styles.forgot_button}
-					title="Forgot Password?"
-					onPress={() => navigation.navigate('ForgotPage')}
-				/>
+			<TouchableOpacity onPress={handleSignUp}>
+				<Text>Register</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.loginBtn}>
-				<Button
-					style={styles.loginText}
-					title="Login"
-					//add check that password is correct ow send to incorrect pass page
-					onPress={() => navigation.navigate('PicturePage')}
-				/>
+			<TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
+				<Text>Login</Text>
 			</TouchableOpacity>
 		</View>
 	);
@@ -96,4 +111,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default LoginPage;
+export default LoginScreen;

@@ -8,12 +8,14 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 
-const ForgotPage = () => {
+const PictureScreen = () => {
 	return (
 		<View>
-			<Text>ForgotPage</Text>
+			<Text>PicturePage</Text>
 		</View>
 	);
 };
 
-export default ForgotPage;
+const styles = StyleSheet.create({});
+
+export default PictureScreen;
