@@ -11,13 +11,16 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 
-export default function LoginPage() {
+const LoginPage = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	return (
 		<View style={styles.container}>
-			<Image style={styles.image} source={require('./assets/log2.png')} />
+			<Image
+				style={{ width: 100, height: 100, paddingBottom: '15px' }}
+				source={require('../../assets/house.jpg')}
+			/>
 			<StatusBar style="auto" />
 			<View style={styles.inputView}>
 				<TextInput
@@ -37,14 +40,23 @@ export default function LoginPage() {
 				/>
 			</View>
 			<TouchableOpacity>
-				<Text style={styles.forgot_button}>Forgot Password?</Text>
+				<Button
+					style={styles.forgot_button}
+					title="Forgot Password?"
+					onPress={() => navigation.navigate('ForgotPage')}
+				/>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.loginBtn}>
-				<Text style={styles.loginText}>LOGIN</Text>
+				<Button
+					style={styles.loginText}
+					title="Login"
+					//add check that password is correct ow send to incorrect pass page
+					onPress={() => navigation.navigate('PicturePage')}
+				/>
 			</TouchableOpacity>
 		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	container: {
@@ -81,6 +93,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		marginTop: 40,
-		backgroundColor: '#FF1493',
 	},
 });
+
+export default LoginPage;
