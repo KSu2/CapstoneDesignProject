@@ -5,6 +5,9 @@ Advisers: Bo Yuan
 
 Yolo v3 tutorial: https://github.com/theAIGuysCode/OIDv4_ToolKit
 
+To download Node 
+- https://nodejs.org/en/download/
+
 To setup Python environment on local machine:
 
 Windows
@@ -26,3 +29,7 @@ Mac/Linux
     <env-name>/bin/pip install numpy
     <env-name>/bin/pip install opencv-python
 ```
+
+Recommended VSCODE extensions:
+- Arduino
+- Prettier
