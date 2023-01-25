@@ -27,3 +27,4 @@ cv2.waitKey(0)
 
 # blob -> array -> image
 # need to figure out a way to iterate over all images in storage bucket
+# how to run python
