@@ -13,12 +13,16 @@ Windows
     virtualenv <env-name>
     <env-name>\Scripts\Activate
     <env-name>\bin\pip install google-cloud-storage
+    <env-name>\bin\pip install numpy
+    <env-name>\bin\pip install opencv-python
 ```
 
 Mac/Linux
 ```
     pip install virtualenv
-    virtualenv <your-env>
-    source <your-env>/bin/activate
-    <your-env>/bin/pip install google-cloud-storage
+    virtualenv <env-name>
+    source <env-name>/bin/activate
+    <env-name>/bin/pip install google-cloud-storage
+    <env-name>/bin/pip install numpy
+    <env-name>/bin/pip install opencv-python
 ```
