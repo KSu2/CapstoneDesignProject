@@ -33,3 +33,7 @@ Mac/Linux
 Recommended VSCODE extensions:
 - Arduino
 - Prettier
+
+```
+List of needed python modules:
+```
