@@ -28,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
 			.then((userCredentials) => {
 				const user = userCredentials.user;
 				console.log(user.email);
-				navigation.navigate('PicturePage');
+				//navigation.navigate('PicturePage');
 			})
 			.catch((error) => alert(error.message));
 	};
@@ -39,7 +39,7 @@ const LoginScreen = ({ navigation }) => {
 				const user = userCredentials.user;
 				console.log(user.email);
 				socket.emit('login', user.email);
-				navigation.navigate('PicturePage');
+				//navigation.navigate('PicturePage');
 			})
 			.catch((error) => alert(error.message));
 	};

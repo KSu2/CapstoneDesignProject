@@ -10,25 +10,17 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import LoginScreen from './LoginScreen';
-import PictureScreen from './PictureScreen';
-import { Header } from 'react-native-elements';
-import { Left, Right, Icon } from 'native-base';
+import LoginScreen from '../screens/LoginScreen';
 
 const Drawer = createDrawerNavigator();
 
-const HomeScreen = ({ navigation }) => {
+const AuthStack = ({ navigation }) => {
 	return (
-		<Drawer.Navigator initialRouteName="Feed">
+		<Drawer.Navigator initialRouteName="Login">
 			<Drawer.Screen
-				name="Feed"
+				name="Login"
 				component={LoginScreen}
 				options={{ drawerLabel: 'Login' }}
-			/>
-			<Drawer.Screen
-				name="Picture"
-				component={PictureScreen}
-				options={{ drawerLabel: 'Picture' }}
 			/>
 		</Drawer.Navigator>
 	);
@@ -40,4 +32,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default HomeScreen;
+export default AuthStack;

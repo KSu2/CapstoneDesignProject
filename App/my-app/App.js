@@ -1,53 +1,49 @@
-import LoginScreen from './screens/LoginScreen';
-import PictureScreen from './screens/PictureScreen';
-import ForgotScreen from './screens/RegisterScreen';
-import HomeScreen from './screens/HomeScreen';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useEffect, useState } from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SocketProvider } from './context/socket';
-// use to communicate with flask server
+import { auth } from './firebase';
+import AppStack from './stacks/AppStack';
+import AuthStack from './stacks/AuthStack';
 
-// import { createDrawerNavigator } from '@react-navigation/drawer';
+const Drawer = createDrawerNavigator();
 
-const Stack = createNativeStackNavigator();
-// 127.0.0.1:5000 - the address should be changed to the ip of the raspberry pi
-// this is only for development though need to change this for production
-
-// const Drawer = createDrawerNavigator();
+function onAuthStateChange(callback) {
+	auth.onAuthStateChanged((user) => {
+		console.log('state changed');
+		console.log(user);
+		if (user) {
+			callback({ loggedIn: true });
+		} else {
+			callback({ loggedIn: false });
+		}
+	});
+}
 
 export default function App() {
+	const [user, setUser] = useState({ loggedIn: false });
+	let render;
+	console.log(auth.currentUser);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChange(setUser);
+		return () => {
+			unsubscribe();
+		};
+	}, []);
+	if (!user.loggedIn) {
+		return (
+			<SocketProvider>
+				<NavigationContainer>
+					<AuthStack></AuthStack>
+				</NavigationContainer>
+			</SocketProvider>
+		);
+	}
 	return (
 		<SocketProvider>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="Home">
-					<Stack.Screen
-						name="Home"
-						//options={{ headerShown: false }}
-						component={LoginScreen}
-					/>
-					<Stack.Screen
-						name="PicturePage"
-						//options={{ headerShown: false }}
-						component={PictureScreen}
-					/>
-					<Stack.Screen
-						name="ForgotPage"
-						//options={{ headerShown: false }}
-						component={ForgotScreen}
-					/>
-					<Stack.Screen
-						name="HomePage"
-						//options={{ headerShown: false }}
-						component={HomeScreen}
-					/>
-				</Stack.Navigator>
+				<AppStack></AppStack>
 			</NavigationContainer>
 		</SocketProvider>
 	);
-	// return (
-	//   <Drawer.Navigator>
-	//     <Drawer.Screen name='Login' component={LoginScreen} />
-	//     <Drawer.Screen name='Add Pictures' component={PictureScreen} />
-	//   </Drawer.Navigator>
-	// );
 }
