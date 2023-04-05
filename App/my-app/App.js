@@ -9,41 +9,43 @@ import AuthStack from './stacks/AuthStack';
 const Drawer = createDrawerNavigator();
 
 function onAuthStateChange(callback) {
-	auth.onAuthStateChanged((user) => {
-		console.log('state changed');
-		console.log(user);
-		if (user) {
-			callback({ loggedIn: true });
-		} else {
-			callback({ loggedIn: false });
-		}
-	});
+  auth.onAuthStateChanged((user) => {
+    console.log('state changed');
+    console.log(user);
+    if (user) {
+      callback({ loggedIn: true });
+    } else {
+      callback({ loggedIn: false });
+    }
+  });
 }
 
 export default function App() {
-	const [user, setUser] = useState({ loggedIn: false });
-	let render;
-	console.log(auth.currentUser);
-	useEffect(() => {
-		const unsubscribe = onAuthStateChange(setUser);
-		return () => {
-			unsubscribe();
-		};
-	}, []);
-	if (!user.loggedIn) {
-		return (
-			<SocketProvider>
-				<NavigationContainer>
-					<AuthStack></AuthStack>
-				</NavigationContainer>
-			</SocketProvider>
-		);
-	}
-	return (
-		<SocketProvider>
-			<NavigationContainer>
-				<AppStack></AppStack>
-			</NavigationContainer>
-		</SocketProvider>
-	);
+  const [user, setUser] = useState({ loggedIn: false });
+  let render;
+  console.log(auth.currentUser);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChange(setUser);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  if (!user.loggedIn) {
+    console.log('not logged in ');
+    return (
+      <SocketProvider>
+        <NavigationContainer>
+          <AuthStack></AuthStack>
+        </NavigationContainer>
+      </SocketProvider>
+    );
+  } else {
+    return (
+      <SocketProvider>
+        <NavigationContainer>
+          <AppStack></AppStack>
+        </NavigationContainer>
+      </SocketProvider>
+    );
+  }
 }
