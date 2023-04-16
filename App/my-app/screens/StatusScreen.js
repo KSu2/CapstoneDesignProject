@@ -7,18 +7,18 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SocketContext } from '../context/socket';
 
 const StatusScreen = () => {
+  const [status, setStatus] = useState('');
   const socket = useContext(SocketContext);
-  let status;
   socket.emit('status');
 
   //custom listener for status event
   socket.on('status', (data) => {
     console.log(data);
-    status = data;
+    setStatus(data);
   });
 
   return (

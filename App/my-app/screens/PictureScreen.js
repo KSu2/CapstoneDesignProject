@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,6 +13,7 @@ import { auth, storage, storageRef } from '../firebase';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { uploadBytes } from 'firebase/storage';
 import { signOut } from 'firebase/auth';
+import { SocketContext } from '../context/socket';
 
 console.log(auth.currentUser);
 
@@ -22,6 +23,7 @@ const PictureScreen = () => {
   const [transferred, setTransferred] = useState(0);
   const [title, setTitle] = useState('');
   let currentUser = '';
+  const socket = useContext(SocketContext);
 
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -54,6 +56,7 @@ const PictureScreen = () => {
 
     uploadBytes(ref, blob).then((snapshot) => {
       console.log('Uploaded a blob or file!');
+      socket.emit('upload', currentUser);
     }); // target directory name
   };
 

@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const socket = useContext(SocketContext);
-  console.log(socket);
+  //console.log(socket);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
